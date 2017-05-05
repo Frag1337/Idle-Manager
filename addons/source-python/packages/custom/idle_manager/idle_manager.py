@@ -6,6 +6,7 @@
 # >> IMPORTS
 # =============================================================================
 # Source.Python
+from config.manager import ConfigManager
 from listeners import OnClientActive
 from listeners import OnClientDisconnect
 from listeners import OnButtonStateChanged
@@ -45,24 +46,21 @@ class OnClientBack(ListenerManagerDecorator):
 
 
 # =============================================================================
-<<<<<<< HEAD:addons/source-python/packages/custom/idle_manager/idle_manager.py
+# >> CONFIGURATION
+# =============================================================================
+# Create the config file
+with ConfigManager('idle_manager', 'idle_') as config:
+
+    # Create the time convar
+    idle_time = config.cvar(name='time', 
+                            default=60.0, 
+                            description='The Time before a Client is marked as Idle.'
+                            )
+
+
+# =============================================================================
 # >> FUNCTIONS
 # =============================================================================
-=======
-# >> FOR OTHER PLUGINS
-# =============================================================================
-
-def IsClientIdle(index):
-    if index in _players and _players[index]:
-        return True
-    else:
-        return False
-
-# =============================================================================
-# >> HELPER FUNCTIONS
-# =============================================================================
-
->>>>>>> origin/master:addons/source-python/plugins/idle_manager/idle_manager.py
 def load():
     # Late Loading
     for player in PlayerIter():
@@ -78,11 +76,13 @@ def on_client_active(index):
 
 @OnClientDisconnect
 def on_client_disconnect(index):
-    if _timers[index].running:
-        _timers[index].cancel()
+    if index in _timers:
+        if _timers[index].running:
+            _timers[index].cancel()
+        del _timers[index]
 
-    del _timers[index]
-    del _players[index]
+    if index in _players:
+        del _players[index]
 
 
 @OnButtonStateChanged
@@ -124,9 +124,8 @@ def SetIdle(index):
     # Client is now idle
     _players[index] = True
 
-<<<<<<< HEAD:addons/source-python/packages/custom/idle_manager/idle_manager.py
     # Notify
-    OnClientBack.manager.notify(index)
+    OnClientIdle.manager.notify(index)
 
 
 def IsClientIdle(index):
@@ -140,8 +139,3 @@ def IsClientIdle(index):
         return bool(_players[index])
     else:
         raise ValueError('Invalid Client Index. (:d)'.format(index))
-=======
-    # Broadcast Idle Set Message
-    if idle_set_message.get_int() > 0:
-        SayText2(translation_strings['Set Message']).send(index)
->>>>>>> origin/master:addons/source-python/plugins/idle_manager/idle_manager.py

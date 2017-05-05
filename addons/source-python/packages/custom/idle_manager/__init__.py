@@ -1,10 +1,10 @@
 # ../idle_manager/__init__.py
 
-"""Package that detects idle players."""
+"""Package that marks idle players."""
 
 # Custom Package
 from .idle_manager import OnClientIdle
-from .idle_manager import OnClientIdleBack
+from .idle_manager import OnClientBack
 from .idle_manager import IsClientIdle
 
 __all__ = (
