@@ -46,5 +46,5 @@ from players.helpers import index_from_userid
 @Event('player_say')
 def player_say(game_event):
     index = index_from_userid(game_event.get_int('userid'))
-    print('Idle Status for Index "{:d}": {}'.format(index, IsClientIdle(index)))
+    print("Idle Status for Index '{:d}': {}".format(index, IsClientIdle(index)))
 ```
