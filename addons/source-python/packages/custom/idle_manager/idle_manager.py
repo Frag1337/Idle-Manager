@@ -1,6 +1,6 @@
 # ../idle_manager/idle_manager.py
 
-"""Package that detects idle players."""
+"""Package that marks idle players."""
 
 # =============================================================================
 # >> IMPORTS
@@ -71,7 +71,7 @@ def load():
 def on_client_active(index):
     _players[index] = False
 
-    ResetIdleTimer(index)
+    reset_client_idle_timer(index)
 
 
 @OnClientDisconnect
@@ -87,48 +87,48 @@ def on_client_disconnect(index):
 
 @OnButtonStateChanged
 def on_button_state_changed(player, old_buttons, new_buttons):
-    ResetIdleTimer(player.index)
+    reset_client_idle_timer(player.index)
 
 
 @OnClientSettingsChanged
 def on_client_settings_changed(index):
-    ResetIdleTimer(index)
+    reset_client_idle_timer(index)
 
 
 @SayFilter
 def say_filter(command, index, team_only):
-    ResetIdleTimer(index)
+    reset_client_idle_timer(index)
 
 
 @ClientCommandFilter
 def client_command_filter(command, index):
-    ResetIdleTimer(index)
+    reset_client_idle_timer(index)
 
 
-def ResetIdleTimer(index):
+def reset_client_idle_timer(index):
     # Reset Idle Timers
     if index in _timers and _timers[index].running:
         _timers[index].cancel()
 
     if _players[index]:
-        # Client is back from being idle
+        # Client is back from being Idle
         _players[index] = False
 
         # Notify
         OnClientBack.manager.notify(index)
 
-    _timers[index] = Delay(idle_time.get_int(), SetIdle, (index,))
+    _timers[index] = Delay(idle_time.get_int(), set_client_idle, (index,))
 
 
-def SetIdle(index):
-    # Client is now idle
+def set_client_idle(index):
+    # Client is now Idle
     _players[index] = True
 
     # Notify
     OnClientIdle.manager.notify(index)
 
 
-def IsClientIdle(index):
+def is_client_idle(index):
     """
     Returns the Client Idle Status for the given Client Index.
 

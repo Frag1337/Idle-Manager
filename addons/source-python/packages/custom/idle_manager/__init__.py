@@ -5,10 +5,10 @@
 # Custom Package
 from .idle_manager import OnClientIdle
 from .idle_manager import OnClientBack
-from .idle_manager import IsClientIdle
+from .idle_manager import is_client_idle
 
 __all__ = (
     'OnClientIdle',
     'OnClientBack',
-    'IsClientIdle',
+    'is_client_idle',
 )
