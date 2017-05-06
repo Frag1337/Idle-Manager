@@ -7,7 +7,7 @@ Idle Manager API which handles Idle players for Source Python.
 OnClientIdle
 --------------
 
-Called when a client is marked as idle.
+Called when a Client is marked as Idle.
 
 ```python
 from idle_manager import OnClientIdle
@@ -21,7 +21,7 @@ def on_client_idle(index):
 OnClientBack
 --------------
 
-Called when a client is back from being idle.
+Called when a Client is back from being Idle.
 
 ```python
 from idle_manager import OnClientBack
