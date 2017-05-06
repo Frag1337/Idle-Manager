@@ -32,7 +32,7 @@ def on_client_back(index):
 ```
 
 
-is_client_idle
+is_client_idle(index)
 --------------
 
 Returns the Client Idle Status for the given Client Index.
